@@ -7,6 +7,12 @@
 //   #3 : make object pickable when clicked *Tick*
 // #3 : making object snap to said grid *tick*
 // #4 : make object place snapped to grid *tick*
+// #5 : directional placement
+//    #1 : indicate direction
+//    #2 : allow rotation using "r"
+// #6 : Purchase items
+//   #1 : purchase generic item *tick*
+//   #2 : choose item type (types of items);
  
  Grid grid = new Grid(600,600,20);
  WorldEngine worldengine; 
