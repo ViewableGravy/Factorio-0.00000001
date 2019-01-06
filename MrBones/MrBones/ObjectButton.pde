@@ -1,34 +1,34 @@
 
-public class ObjectButton {
+public abstract class ObjectButton {
 
-  private WorldObject obj;
-  private int _width, _height;
-  private PVector center;
-  private int _spacing;
-  private String name, desc;
-  public ObjectButton(PVector pos, int width, int height, String name, String Desc, int spacing) {
+  protected WorldObject obj;
+  protected int _width, _height;
+  protected PVector center;
+  protected int _spacing;
+  protected String name, desc;
+  protected color _colour;
+  public ObjectButton(PVector pos, int width, int height, String name, String Desc, int spacing, color colour) {
     _spacing = spacing;
     center = pos;
     _width = width;
     _height = height;
+    _colour = colour;
   }
 
-  public WorldObject GetObjs() {
-    // make inherited and change depending on what it is meant to return in child classes
-    //return new Chest(name, desc, _spacing);
-    return new WorldObject("name", "A random object (1)", 40, 40, grid.spacing);
-  }
+  public abstract WorldObject GetObjs();
 
   public void display() {
+    pushMatrix();
+    fill(_colour);
     rect(center.x, center.y, _width,_height);
-  }
+    popMatrix();  
+}
 
-  private boolean OnShape(float mousex, float mousey) {
+  protected boolean OnShape(float mousex, float mousey) { //<>//
     boolean onShape = false;
     if (mousex > (center.x) && mousex < (center.x + _width) && mousey < (center.y + _height) && mousey > (center.y)) {
       onShape = true;
     }
-    println(onShape,center.x,center.y,_height,_width);
     return onShape;
   }
 }

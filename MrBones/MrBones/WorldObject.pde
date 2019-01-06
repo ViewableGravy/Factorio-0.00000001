@@ -40,9 +40,11 @@ public class WorldObject {
   protected boolean placed;
   protected int _width, _height;
   protected int _spacing;
+  protected color _colour;
 
-  WorldObject(String _name, String _desc, int __width, int __height, int spacing) {
+  WorldObject(String _name, String _desc, int __width, int __height, int spacing, color colour) {
     center = new PVector(0, 0);
+    _colour = colour;
     name = _name;
     desc = _desc;
     placed = false;
@@ -103,7 +105,7 @@ public class WorldObject {
     if (!placed) {
       fill(255, 0, 0);
     } else {
-      fill(0, 255, 0);
+      fill(0,255,0);
     }
   }
 

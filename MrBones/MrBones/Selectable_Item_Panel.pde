@@ -26,7 +26,7 @@ public class UI {
 
 
   public void DrawHotbar() {
-    hotbar.Display(0, 0, 255);
+    hotbar.Display();
   }
 
   public boolean StarterObjectSelected(float mousex, float mousey) {
