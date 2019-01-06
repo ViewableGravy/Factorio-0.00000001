@@ -34,12 +34,12 @@ public enum Direction {
 
 public class WorldObject {
 
-  private PVector center, offset;
-  private String name, desc;
-  private Direction direction = Direction.up; // number dictating rotation in degrees. valid inputs are 90,180,270,0;
-  private boolean placed;
-  private int _width, _height;
-  private int _spacing;
+  protected PVector center, offset;
+  protected String name, desc;
+  protected Direction direction = Direction.up; // number dictating rotation in degrees. valid inputs are 90,180,270,0;
+  protected boolean placed;
+  protected int _width, _height;
+  protected int _spacing;
 
   WorldObject(String _name, String _desc, int __width, int __height, int spacing) {
     center = new PVector(0, 0);
@@ -107,20 +107,33 @@ public class WorldObject {
     }
   }
 
+  public boolean IsRotatableObject() {
+    return true;
+  }
+
   public void DrawObject() {
     pushMatrix();
-
     float topx = center.x - _width + _spacing/2;
     float topy = center.y - _height + _spacing/2;
     PickColour();
-    if (direction != Direction.up) {
-      translate(topx + _width/2, topy + _height/2);
-      rotate(radians(direction.GetDirection()));
-      translate(-(topx + _width/2), -(topy + _height/2));
-    }
     rect(topx, topy, _width, _height);
     fill(0, 0, 255);
-    triangle(topx + _width/3, topy, topx + _width/2, topy + _height/3, topx + (2 * _width/3), topy);
+    if (IsRotatableObject()) {
+      switch(direction) {
+      case up: 
+        triangle(topx + _width/3, topy, topx + _width/2, topy + _height/3, topx + (2 * _width/3), topy);
+        break;
+      case right:
+        triangle(topx + _width, topy + _height/3, topx + (2*_width/3), topy + _height/2, topx + _width, topy + (2*_height/3));
+        break;
+      case down:
+        triangle(topx + _width/3, topy + _height, topx + _width/2, topy + (2*_height/3), topx + (2 * _width/3), topy + _height);
+        break;
+      case left:
+        triangle(topx, topy + _height/3, topx + _width/3, topy + _height/2, topx, topy + (2*_height/3));
+        break;
+      }
+    }
     popMatrix();
   }
 

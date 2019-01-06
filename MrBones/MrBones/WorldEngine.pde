@@ -19,11 +19,13 @@ public class WorldEngine {
   }
 
   void KeyPress(char key, float x, float y) {
-    
+
     for (WorldObject object : objs) {
       if (key == 'r') {
         if ( object.GetFollowing() || object.OnShape(x, y) ) {
-          object.RotateOnce();
+          if (object.IsRotatableObject()) {
+            object.RotateOnce();
+          }
         }
       }
     }
