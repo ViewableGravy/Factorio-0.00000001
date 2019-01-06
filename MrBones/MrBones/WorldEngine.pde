@@ -18,14 +18,31 @@ public class WorldEngine {
     DrawObjects();
   }
 
-  void FollowMouse(float x, float y) {
-    int i = 0;
+  void KeyPress(char key, float x, float y) {
+    
     for (WorldObject object : objs) {
-      if (object.FollowMouse(x, y)) {
-        following = true;
-      } else if (i++ == objs.size() - 1) {
-        following = false;
+      if (key == 'r') {
+        if ( object.GetFollowing() || object.OnShape(x, y) ) {
+          object.RotateOnce();
+        }
       }
+    }
+  }
+
+  void RotateObject() {
+    // condition: object must be aware of it's current direction
+    // this will be done by the object storing it's rotation in degrees between 0 and 270
+  }
+
+  void FollowMouse(float x, float y) {
+    //int i = 0;
+    for (WorldObject object : objs) {
+      // if (object.FollowMouse(x, y)) {
+      //following = true;
+      // } else if (i++ == objs.size() - 1) {
+      //following = false;
+      // }
+      object.FollowMouse(x, y);
     }
   }
 
@@ -55,8 +72,7 @@ public class WorldEngine {
       {
         println(e);
       }
-    } 
-    else 
+    } else 
     {
       for (WorldObject object : objs) 
       {

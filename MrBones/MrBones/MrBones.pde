@@ -8,8 +8,8 @@
 // #3 : making object snap to said grid *tick*
 // #4 : make object place snapped to grid *tick*
 // #5 : directional placement
-//    #1 : indicate direction
-//    #2 : allow rotation using "r"
+//    #1 : indicate direction *tick*
+//    #2 : allow rotation using "r" *tick* //note: doesn't work with uneven shapes e.g. 2x3
 // #6 : Purchase items
 //   #1 : purchase generic item *tick*
 //   #2 : choose item type (types of items);
@@ -18,6 +18,7 @@
  WorldEngine worldengine; 
 
 void setup() {
+  
   size(600,600);
   grid.DrawGrid();
   ArrayList<WorldObject> objects = new ArrayList<WorldObject>();
@@ -29,10 +30,13 @@ void setup() {
 void draw() {
   background(100);
   grid.DrawGrid();
-  worldengine.DrawObjects();
   worldengine.Tick(mouseX,mouseY);
 }
 
 void mousePressed() {
  worldengine.MousePress(mouseX,mouseY);
+}
+
+void keyPressed() {
+ worldengine.KeyPress(key, mouseX, mouseY); 
 }

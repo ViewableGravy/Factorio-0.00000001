@@ -1,15 +1,48 @@
 
+public enum Direction {
+  up, 
+    right, 
+    down, 
+    left;
+
+  public int GetDirection() {
+    switch(this) {
+    case  up: 
+      return 0;
+    case right:
+      return 90;
+    case down:
+      return 180;
+    case left: 
+      return 270;
+    default:
+      return 0;
+    }
+  }
+
+  static final Direction[] VALUES = values();
+  public Direction incrementDirection() 
+  {
+    if (VALUES[ordinal()] == left) {
+      return VALUES[ordinal() - 3];
+    } else {
+      return VALUES[ordinal()+1];
+    }
+  }
+  // public Direction decrementDirection() { return VALUES[ordinal()-1]; }
+}
 
 public class WorldObject {
 
   private PVector center, offset;
   private String name, desc;
+  private Direction direction = Direction.up; // number dictating rotation in degrees. valid inputs are 90,180,270,0;
   private boolean placed;
   private int _width, _height;
   private int _spacing;
 
   WorldObject(String _name, String _desc, int __width, int __height, int spacing) {
-    center = new PVector(0,0);
+    center = new PVector(0, 0);
     name = _name;
     desc = _desc;
     placed = false;
@@ -26,17 +59,15 @@ public class WorldObject {
       println("invalid object dimensions");
     }
   }
-  
+
   public boolean GetFollowing() {
     return !placed;
   }
 
-  public boolean FollowMouse(float x, float y) {
+  public void FollowMouse(float x, float y) {
     if (!placed) {
       AlignWithGrid(x - offset.x, y - offset.y);
-      return true;
     }
-    return false;
   }
 
   private void AlignWithGrid(float x, float y) {
@@ -78,8 +109,18 @@ public class WorldObject {
 
   public void DrawObject() {
     pushMatrix();
+
+    float topx = center.x - _width + _spacing/2;
+    float topy = center.y - _height + _spacing/2;
     PickColour();
-    rect(center.x - _width + _spacing/2, center.y - _height + _spacing/2, _width, _height);
+    if (direction != Direction.up) {
+      translate(topx + _width/2, topy + _height/2);
+      rotate(radians(direction.GetDirection()));
+      translate(-(topx + _width/2), -(topy + _height/2));
+    }
+    rect(topx, topy, _width, _height);
+    fill(0, 0, 255);
+    triangle(topx + _width/3, topy, topx + _width/2, topy + _height/3, topx + (2 * _width/3), topy);
     popMatrix();
   }
 
@@ -89,5 +130,9 @@ public class WorldObject {
       onShape = true;
     }
     return onShape;
+  }
+
+  public void RotateOnce() {
+    direction = direction.incrementDirection();
   }
 }
