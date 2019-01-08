@@ -10,9 +10,17 @@
 // #5 : directional placement
 //    #1 : indicate direction *tick*
 //    #2 : allow rotation using "r" *tick* //note: doesn't work with uneven shapes e.g. 2x3
-// #6 : Purchase items
+// #6 : Purchase items *tick*
 //   #1 : purchase generic item *tick*
-//   #2 : choose item type (types of items);
+//   #2 : choose item type (types of items); *tick*
+// Future proof performance in relation to rendering
+// this can probably be done by applying transformations and drawing as a PShape rather than just rect.
+// this will take strain off CPU and utilise GPU.
+//
+// other things to consider is objects cannot be placed intersecting other objects
+// consider implementing a quadtree system to reduce the load of this in the long run
+
+// give specific items an inventory to hold things (such as other items for now but eventually only specific items)
  
  Grid grid = new Grid(600,600,20);
  WorldEngine worldengine; 
